@@ -3,39 +3,5 @@
         android:layout_width="500dp"
         android:layout_height="100dp">
 
-        <ImageButton
-        android:src="@drawable/red"
-        android:id="@+id/redToken"
-        android:adjustViewBounds="true"
-        android:onClick="switchLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="3dp"/>
-
-        <ImageButton
-            android:src="@drawable/blue"
-            android:id="@+id/blueToken"
-            android:adjustViewBounds="true"
-            android:onClick="switchLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/redToken"
-            android:layout_toRightOf="@id/redToken"
-            android:layout_margin="3dp"/>
-
-        <View android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/token1"
-            android:background="@drawable/circle"
-            android:layout_margin="3dp"
-            android:layout_toRightOf="@id/blueToken"
-            android:layout_toEndOf="@id/blueToken"/>
-
-        <View android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/token2"
-            android:background="@drawable/circle"
-            android:layout_margin="3dp"
-            android:layout_below="@id/token1" />
 
     </RelativeLayout>

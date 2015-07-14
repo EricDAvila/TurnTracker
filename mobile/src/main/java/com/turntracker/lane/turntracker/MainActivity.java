@@ -13,33 +13,43 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity{
-    Integer[] imageIDs = {
-            R.drawable.circle,
-            R.drawable.circle,
-            R.drawable.circle,
-            R.drawable.circle,
-            R.drawable.circle,
-            R.drawable.circle,
-            R.drawable.circle};
+    Integer[] imageIDs = new Integer[9];
+    int visibilityTracker;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        visibilityTracker = 3;
+        fillDrawableArray(visibilityTracker);
 
+        redraw();
+    }
+public void redraw(){
         GridView gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(new GridViewAdapter(this));
-
-        gridView.setOnItemClickListener(new OnItemClickListener()
-        {
+        gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
-                                    View v, int position, long id)
-            {
-                Toast.makeText(getBaseContext(),
-                        "pic" + (position + 1) + " selected",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+                                View v, int position, long id) {
+                if(visibilityTracker!=9) {
+                    visibilityTracker++;
+                    fillDrawableArray(visibilityTracker);
+                    redraw();
+                    Toast.makeText(getBaseContext(),
+                            "pic" + (position + 1) + " selected",
+                            Toast.LENGTH_SHORT).show();
+                }
+        }
+    });
+    }
+
+    public void fillDrawableArray(int drawTo) {
+        for (int i = 0; i != drawTo; i++)
+            imageIDs[i] = R.drawable.circle;
+        while (drawTo != 9){
+            imageIDs[drawTo] = R.drawable.blank;
+            drawTo++;
+        }
     }
 
 public class GridViewAdapter extends BaseAdapter {
