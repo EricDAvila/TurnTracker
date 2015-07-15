@@ -14,6 +14,7 @@ public class MainActivity extends Activity{
     Integer[] imageIDs = new Integer[9];
     int visibilityTracker;
     boolean oneMoreClickNeeded;
+    private ImageView trashCan = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,17 +24,23 @@ public class MainActivity extends Activity{
         oneMoreClickNeeded = true;
         fillDrawableArray(visibilityTracker);
         redraw();
+        trashCan = (ImageView) findViewById(R.id.trash);
+        trashCan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (plusCheck()){
+                    visibilityTracker--;
+                    imageIDs[visibilityTracker] = R.drawable.blank;
+                    imageIDs[(visibilityTracker - 1)] = R.drawable.plus;
+                    redraw();
+                }
+            }
+        });
     }
+
 public void redraw(){
         GridView gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(new GridViewAdapter(this));
-        /*gridView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent,
-                                View v, int position, long id) {
-
-
-        }
-    });*/
     }
 
     public void fillDrawableArray(int drawTo) {
@@ -50,9 +57,23 @@ public void redraw(){
             }
     }
 
+    public boolean plusCheck(){
+        int plusLocation = 0;
+        for(int i=0; i!=9; i++)
+            if(imageIDs[i]==R.drawable.plus)
+                plusLocation = i;
+        if(plusLocation==2)
+            return false;
+        if(plusLocation==0) {
+            imageIDs[8] = R.drawable.plus;
+            redraw();
+            return false;
+        }
+        return true;
+    }
+
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
-
 
     public GridViewAdapter(Context c)
     {
