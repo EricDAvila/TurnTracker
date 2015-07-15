@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity{
     Integer[] imageIDs = new Integer[9];
@@ -35,17 +34,17 @@ public void redraw(){
                     visibilityTracker++;
                     fillDrawableArray(visibilityTracker);
                     redraw();
-                    Toast.makeText(getBaseContext(),
-                            "pic" + (position + 1) + " selected",
-                            Toast.LENGTH_SHORT).show();
                 }
         }
     });
     }
 
     public void fillDrawableArray(int drawTo) {
+        drawTo--;
         for (int i = 0; i != drawTo; i++)
             imageIDs[i] = R.drawable.circle;
+        imageIDs[drawTo] = R.drawable.plus;
+        drawTo++;
         while (drawTo != 9){
             imageIDs[drawTo] = R.drawable.blank;
             drawTo++;

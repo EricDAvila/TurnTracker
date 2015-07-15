@@ -2,6 +2,9 @@
         android:orientation="horizontal"
         android:layout_width="500dp"
         android:layout_height="100dp">
-
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:src="@drawable/can"/>
 
     </RelativeLayout>
