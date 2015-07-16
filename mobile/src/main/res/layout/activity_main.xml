@@ -3,6 +3,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="500px"
+        android:background="#fffff5e5">
+    </FrameLayout>
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gridView1"
     android:numColumns="3"
@@ -10,14 +15,16 @@
     android:columnWidth="100dp"
     android:stretchMode="columnWidth"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="#ffe9faff">
 
 </GridView>
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:id="@+id/trash"
-        android:src="@drawable/can"/>
+        android:src="@drawable/can"
+        android:background="#ffe9faff"/>
 
 
 </LinearLayout>
