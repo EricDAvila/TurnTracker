@@ -15,15 +15,18 @@ public class MainActivity extends Activity{
     int visibilityTracker;
     boolean oneMoreClickNeeded;
     private ImageView trashCan = null;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main);
         visibilityTracker = 3;
         oneMoreClickNeeded = true;
         fillDrawableArray(visibilityTracker);
         redraw();
+
         trashCan = (ImageView) findViewById(R.id.trash);
         trashCan.setOnClickListener(new View.OnClickListener() {
             @Override

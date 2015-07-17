@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-    <FrameLayout
+    android:orientation="vertical"
+    android:background="#ffe9faff">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="500px"
-        android:background="#fffff5e5">
-    </FrameLayout>
+        android:background="#fffff5e5"
+        android:id="@+id/frameLayout">
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/blank"
+            />
+        <com.gc.materialdesign.views.Slider
+            android:id="@+id/slider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            materialdesign:max="50"
+            materialdesign:min="0"
+            android:layout_weight="1"
+            />
+        <EditText
+            android:id="@+id/mytextText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="100sp"
+            android:layout_alignParentBottom="true"
+            >
+            </EditText>
+    </LinearLayout>
+
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gridView1"
     android:numColumns="3"
@@ -16,7 +43,7 @@
     android:stretchMode="columnWidth"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#ffe9faff">
+    >
 
 </GridView>
     <ImageView
@@ -24,7 +51,7 @@
         android:layout_height="150dp"
         android:id="@+id/trash"
         android:src="@drawable/can"
-        android:background="#ffe9faff"/>
+        />
 
 
 </LinearLayout>
