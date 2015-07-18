@@ -24,13 +24,15 @@
             materialdesign:max="50"
             materialdesign:min="0"
             android:layout_weight="1"
+            android:visibility="invisible"
             />
         <EditText
-            android:id="@+id/mytextText"
+            android:id="@+id/myText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="100sp"
             android:layout_alignParentBottom="true"
+            android:visibility="invisible"
             >
             </EditText>
     </LinearLayout>
