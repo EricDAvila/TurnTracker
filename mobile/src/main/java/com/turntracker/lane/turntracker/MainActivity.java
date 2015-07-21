@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.gc.materialdesign.views.Slider;
 
@@ -27,6 +27,7 @@ public class MainActivity extends Activity{
     String [] sharedColor = {"T1_Color","T2_Color","T3_Color","T4_Color","T5_Color",
             "T6_Color","T7_Color","T8_Color","T9_Color"};
     SharedPreferences pref = null;
+    Slider slider = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,11 @@ public class MainActivity extends Activity{
         oneMoreClickNeeded = true;
         fillDrawableArray(visibilityTracker);
         redraw();
-
         trashCan = (ImageView) findViewById(R.id.trash);
         trashCan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (plusCheck()){
+                if (plusCheck()) {
                     visibilityTracker--;
                     //deleteEntry(visibilityTracker-1);
                     imageIDs[visibilityTracker] = R.drawable.blank;
@@ -52,9 +52,90 @@ public class MainActivity extends Activity{
                 }
             }
         });
+        slider = (Slider) findViewById(R.id.slider);
+        slider.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int sliderValue = slider.getValue();
+                if(sliderValue<=4) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.violet));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=8&&sliderValue>4) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.red));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=12&&sliderValue>8) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.orange));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=16&&sliderValue>12) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.lightOrange));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=20&&sliderValue>16) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.darkYellow));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=24&&sliderValue>20) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.yellow));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=28&&sliderValue>24) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=32&&sliderValue>28) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.green));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=36&&sliderValue>32) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.lightBlue));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=40&&sliderValue>36) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.blue));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=44&&sliderValue>40) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.darkBlue));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                if(sliderValue<=50&&sliderValue>44) {
+                    slider.setBackgroundColor(getResources().getColor(R.color.purple));
+                    editor.putInt(sharedColor[currentToken], sliderValue);
+                    editor.commit();
+                }
+                return false;
+            }
+        });
     }
+        //slider.onKeyUp()
+        /*slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Slider slider = (Slider) findViewById(R.id.slider);
+                int sliderValue = slider.getValue();
+                Toast.makeText(MainActivity.this,
+                        "SLIDER VALUE: " + sliderValue,
+                        Toast.LENGTH_LONG).show();
+            }
 
-public void redraw(){
+        });*/
+
+
+    public void redraw(){
         GridView gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(new GridViewAdapter(this));
     }
@@ -97,13 +178,18 @@ public void redraw(){
         /*
         Need the fill color here
          */
+
     }
 
     public void showTokenAttributes(int tokenNum){
         EditText edit=(EditText)findViewById(R.id.myText);
         edit.setVisibility(View.VISIBLE);
-        Slider slider = (Slider) findViewById(R.id.slider);
-        slider.setVisibility(View.VISIBLE);
+        Slider slider2 = slider;
+        slider2.setVisibility(View.VISIBLE);
+        int sliderValue = slider.getValue();
+        /*Toast.makeText(MainActivity.this,
+                "SLIDER VALUE: " + sliderValue,
+                Toast.LENGTH_LONG).show();*/
         currentToken = tokenNum;
     }
 
@@ -124,9 +210,9 @@ public void redraw(){
         //editor.remove(sharedName[entryLocation]);
         //editor.commit();
         editor.putString(sharedName[entryLocation-1], "");
-        Toast.makeText(MainActivity.this,
+        /*Toast.makeText(MainActivity.this,
                 "Deleting " + sharedName[visibilityTracker-1],
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_LONG).show();*/
         fillTokenAttributes(currentToken);
         //editor.remove(sharedColor[visibilityTracker]);
         //editor.commit();
