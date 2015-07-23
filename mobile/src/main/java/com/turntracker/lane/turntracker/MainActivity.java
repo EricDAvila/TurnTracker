@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gc.materialdesign.views.Slider;
 
@@ -45,6 +46,10 @@ public class MainActivity extends Activity{
             public void onClick(View v) {
                 if (plusCheck()) {
                     visibilityTracker--;
+                    editor.putString(sharedName[visibilityTracker-1], "");
+                    editor.putInt(sharedColor[visibilityTracker-1], 0);
+                    editor.commit();
+                    //imageIDs[visibilityTracker-1] = R.drawable.circle;
                     //deleteEntry(visibilityTracker-1);
                     imageIDs[visibilityTracker] = R.drawable.blank;
                     imageIDs[(visibilityTracker - 1)] = R.drawable.plus;
@@ -61,62 +66,75 @@ public class MainActivity extends Activity{
                     slider.setBackgroundColor(getResources().getColor(R.color.violet));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=8&&sliderValue>4) {
                     slider.setBackgroundColor(getResources().getColor(R.color.red));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=12&&sliderValue>8) {
                     slider.setBackgroundColor(getResources().getColor(R.color.orange));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
-                if(sliderValue<=16&&sliderValue>12) {
+                if(sliderValue<=16&&sliderValue > 12) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightOrange));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=20&&sliderValue>16) {
                     slider.setBackgroundColor(getResources().getColor(R.color.darkYellow));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=24&&sliderValue>20) {
                     slider.setBackgroundColor(getResources().getColor(R.color.yellow));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=28&&sliderValue>24) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightGreen));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=32&&sliderValue>28) {
                     slider.setBackgroundColor(getResources().getColor(R.color.green));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=36&&sliderValue>32) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightBlue));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=40&&sliderValue>36) {
                     slider.setBackgroundColor(getResources().getColor(R.color.blue));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=44&&sliderValue>40) {
                     slider.setBackgroundColor(getResources().getColor(R.color.darkBlue));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
                 if(sliderValue<=50&&sliderValue>44) {
                     slider.setBackgroundColor(getResources().getColor(R.color.purple));
                     editor.putInt(sharedColor[currentToken], sliderValue);
                     editor.commit();
+                    fillDrawableArray(visibilityTracker);
                 }
+                //if (event.getAction()==MotionEvent.ACTION_UP) redraw();
                 return false;
             }
         });
@@ -135,16 +153,57 @@ public class MainActivity extends Activity{
         });*/
 
 
-    public void redraw(){
+    public void redraw(){//redraws gridView/tokens
         GridView gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(new GridViewAdapter(this));
     }
 
     public void fillDrawableArray(int drawTo) {
         drawTo--;
-            for (int i = 0; i != drawTo; i++)
-                imageIDs[i] = R.drawable.circle;
-
+        for (int i = 0; i != drawTo; i++) {
+            imageIDs[i] = R.drawable.circle;
+            int sliderValue = pref.getInt(sharedColor[i], 1337);
+            Toast.makeText(MainActivity.this,
+                    "SliderValue: " + sliderValue,
+                    Toast.LENGTH_LONG).show();
+            if(sliderValue==0) imageIDs[i] =R.drawable.circle;
+            if(sliderValue<=4&&sliderValue!=0) {
+                imageIDs[i] =R.drawable.violet_circle;
+            }
+            if (sliderValue<=8&&sliderValue>4) {
+                imageIDs[i] =R.drawable.red_circle;
+            }
+            if (sliderValue<=12&&sliderValue>8) {
+                imageIDs[i] =R.drawable.orange_circle;
+            }
+            if (sliderValue<=16&&sliderValue>12) {
+                imageIDs[i] =R.drawable.lorange_circle;
+            }
+            if(sliderValue<=20&&sliderValue>16) {
+                imageIDs[i] =R.drawable.dyellow_circle;
+            }
+            if(sliderValue<=24&&sliderValue>20) {
+                imageIDs[i] =R.drawable.yellow_circle;
+            }
+            if(sliderValue<=28&&sliderValue>24) {
+                imageIDs[i] =R.drawable.lgreen_circle;
+            }
+            if(sliderValue<=32&&sliderValue>28) {
+                imageIDs[i] =R.drawable.green_circle;
+            }
+            if(sliderValue<=36&&sliderValue>32) {
+                imageIDs[i] =R.drawable.lblue_circle;
+            }
+            if(sliderValue<=40&&sliderValue>36) {
+                imageIDs[i] =R.drawable.blue_circle;
+            }
+            if(sliderValue<=44&&sliderValue>40) {
+                imageIDs[i] =R.drawable.dblue_circle;
+            }
+            if(sliderValue<=50&&sliderValue>44) {
+                imageIDs[i] =R.drawable.purple_circle;
+            }
+        }
             imageIDs[drawTo] = R.drawable.plus;
             drawTo++;
 
@@ -174,6 +233,44 @@ public class MainActivity extends Activity{
         String currentTokenText = pref.getString(sharedName[tokenNum],null);
         EditText edit=(EditText)findViewById(R.id.myText);
         edit.setText(currentTokenText);
+        slider.setValue(pref.getInt(sharedColor[tokenNum], 0));
+        int sliderValue = slider.getValue();
+        if(sliderValue<=4) {
+            slider.setBackgroundColor(getResources().getColor(R.color.violet));
+        }
+        if(sliderValue<=8&&sliderValue>4) {
+            slider.setBackgroundColor(getResources().getColor(R.color.red));
+        }
+        if(sliderValue<=12&&sliderValue>8) {
+            slider.setBackgroundColor(getResources().getColor(R.color.orange));
+        }
+        if(sliderValue<=16&&sliderValue > 12) {
+            slider.setBackgroundColor(getResources().getColor(R.color.lightOrange));
+        }
+        if(sliderValue<=20&&sliderValue>16) {
+            slider.setBackgroundColor(getResources().getColor(R.color.darkYellow));
+        }
+        if(sliderValue<=24&&sliderValue>20) {
+            slider.setBackgroundColor(getResources().getColor(R.color.yellow));
+        }
+        if(sliderValue<=28&&sliderValue>24) {
+            slider.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+        }
+        if(sliderValue<=32&&sliderValue>28) {
+            slider.setBackgroundColor(getResources().getColor(R.color.green));
+        }
+        if(sliderValue<=36&&sliderValue>32) {
+            slider.setBackgroundColor(getResources().getColor(R.color.lightBlue));
+        }
+        if(sliderValue<=40&&sliderValue>36) {
+            slider.setBackgroundColor(getResources().getColor(R.color.blue));
+        }
+        if(sliderValue<=44&&sliderValue>40) {
+            slider.setBackgroundColor(getResources().getColor(R.color.darkBlue));
+        }
+        if(sliderValue<=50&&sliderValue>44) {
+            slider.setBackgroundColor(getResources().getColor(R.color.purple));
+        }
         showTokenAttributes(tokenNum);
         /*
         Need the fill color here
@@ -209,13 +306,11 @@ public class MainActivity extends Activity{
     public void deleteEntry(int entryLocation){
         //editor.remove(sharedName[entryLocation]);
         //editor.commit();
-        editor.putString(sharedName[entryLocation-1], "");
+        editor.putString(sharedName[entryLocation - 1], "");
         /*Toast.makeText(MainActivity.this,
                 "Deleting " + sharedName[visibilityTracker-1],
                 Toast.LENGTH_LONG).show();*/
         fillTokenAttributes(currentToken);
-        //editor.remove(sharedColor[visibilityTracker]);
-        //editor.commit();
     }
 
 public class GridViewAdapter extends BaseAdapter {
@@ -280,7 +375,7 @@ public class GridViewAdapter extends BaseAdapter {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    saveText(); //save text on plus sign hit, slider color on release
+                    saveText(); //save text on token hit, slider color on release
                     Integer position = (Integer)v.getTag();
                     //pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     String currentTokenText = pref.getString(sharedName[position], null);
