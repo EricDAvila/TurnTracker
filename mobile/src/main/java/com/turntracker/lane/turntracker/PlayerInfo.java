@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.gc.materialdesign.views.Slider;
 
@@ -33,7 +32,7 @@ public class PlayerInfo extends Activity {
             "T6_Slider","T7_Slider","T8_Slider","T9_Slider"}; //for slider Value
 
     int currentToken; //holds which token currently has focus in AttributesPane
-                        //from 0-8, and is 0 when no token is in focus
+                        //from 0-8, and is 10 when no token is in focus
     int plusLocation; //holds location for the plus token from 2-9. When 9, plus isn't visible
                     //plus location is also how drawing is determined
 
@@ -41,7 +40,7 @@ public class PlayerInfo extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        paneIsVisible = false;
+        paneIsVisible = true;
         tokensPaneHasBeenChanged = true;
         attributesPaneHasBeenChanged = true;
         pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -61,13 +60,12 @@ public class PlayerInfo extends Activity {
                 if(plusLocation!=0&&plusLocation!=1&&plusLocation!=2) {
                     clearTokenValues(plusLocation-1);
                     plusLocation--;
-                    tokensPaneHasBeenChanged = true;
                 }
                 if(currentToken==0||currentToken==1){
                     clearTokenValues(currentToken);
-                    tokensPaneHasBeenChanged=true;
-                    attributesPaneHasBeenChanged=true;
                 }
+                tokensPaneHasBeenChanged=true;
+                attributesPaneHasBeenChanged=true;
             }
         });
         slider = (Slider) findViewById(R.id.slider);
@@ -152,7 +150,6 @@ public class PlayerInfo extends Activity {
             try {
                 while (true) {
                     sleep(16);
-                    fillImageIDs();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -169,6 +166,7 @@ public class PlayerInfo extends Activity {
 
     public void updateTokensPane(){
         if(tokensPaneHasBeenChanged) {
+            fillImageIDs();
             GridView gridView = (GridView) findViewById(R.id.gridView1);
             gridView.setAdapter(new GridViewAdapter(this));
             tokensPaneHasBeenChanged=false;
@@ -177,10 +175,7 @@ public class PlayerInfo extends Activity {
 
     public void updateAttributesPane(){
         if(attributesPaneHasBeenChanged) {
-            EditText edit = (EditText) findViewById(R.id.myText);
             if (paneIsVisible) {
-                String currentTokenText = pref.getString(sharedName[currentToken], null);
-                edit.setText(currentTokenText);
                 int sliderValue = pref.getInt(sharedSlider[currentToken], 0);
                 slider.setValue(sliderValue);
                 if (sliderValue <= 4)
@@ -261,12 +256,19 @@ public class PlayerInfo extends Activity {
                 //End of simulated touch
 
             } else {
+                EditText edit = (EditText) findViewById(R.id.myText);
                 edit.setText("");
                 slider.setValue(0);
             }
-            showAndHideAttributesPane();
+            EditText edit = (EditText) findViewById(R.id.myText);
+            String currentTokenText = pref.getString(sharedName[currentToken], null);
+            edit.setText(currentTokenText);
             attributesPaneHasBeenChanged = false;
         }
+        EditText edit = (EditText) findViewById(R.id.myText);
+        String currentTokenText = edit.getText().toString();
+        editor.putString(sharedName[currentToken], currentTokenText);
+        editor.commit();
     }
 
     public void clearTokenValues(int startPoint){
@@ -333,21 +335,6 @@ public class PlayerInfo extends Activity {
             imageIDs[i] = R.drawable.blank;
     }
 
-    public void showAndHideAttributesPane(){
-        if(paneIsVisible){
-            EditText edit=(EditText)findViewById(R.id.myText);
-            edit.setVisibility(View.VISIBLE);
-            Slider slider2 = slider;
-            slider2.setVisibility(View.VISIBLE);
-        }
-        if(!paneIsVisible){
-            EditText edit=(EditText)findViewById(R.id.myText);
-            edit.setVisibility(View.INVISIBLE);
-            Slider slider = (Slider) findViewById(R.id.slider);
-            slider.setVisibility(View.INVISIBLE);
-        }
-    }
-
     public class GridViewAdapter extends BaseAdapter {
         private Context context;
 
@@ -384,14 +371,14 @@ public class PlayerInfo extends Activity {
                 imageView.setOnClickListener(new View.OnClickListener() {//CLICKING ON PLUS
                     @Override
                     public void onClick(View v) {//increment locators on plus touch
-                        //currentToken = plusLocation;
+                        currentToken = plusLocation;
                         plusLocation++;
-                        Toast.makeText(PlayerInfo.this,
+                        /*Toast.makeText(PlayerInfo.this,
                                 "Current PLUS Location: " + plusLocation,
-                                Toast.LENGTH_LONG).show();
-                        //paneIsVisible = true;
-                        //attributesPaneHasBeenChanged = true;
-                        tokensPaneHasBeenChanged = true;
+                                Toast.LENGTH_LONG).show();*/
+                        paneIsVisible = true;
+                        attributesPaneHasBeenChanged=true;
+                        tokensPaneHasBeenChanged=true;
                         }
                 });
             } else if(imageIDs[position]!=R.drawable.blank&&imageIDs[position]!=R.drawable.plus){//if not plus, then store location of token in a tag, and listen
@@ -400,9 +387,6 @@ public class PlayerInfo extends Activity {
                     @Override
                     public void onClick(View v) {
                         Integer position = (Integer)v.getTag();
-                        Toast.makeText(PlayerInfo.this,
-                                "Current Position: " + position,
-                                Toast.LENGTH_LONG).show();
                         currentToken = position;
                         paneIsVisible = true;
                         attributesPaneHasBeenChanged = true;
