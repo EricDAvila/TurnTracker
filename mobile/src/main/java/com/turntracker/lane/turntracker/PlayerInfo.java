@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.gc.materialdesign.views.Slider;
 
@@ -21,7 +25,7 @@ public class PlayerInfo extends Activity {
     SharedPreferences pref = null;
     Editor editor = null;
     Slider slider = null;
-    private ImageView trashCan = null;
+    ImageView trashCan = null;
 
     Integer[] imageIDs = new Integer[9]; //stores references to drawables
 
@@ -30,6 +34,8 @@ public class PlayerInfo extends Activity {
 
     String [] sharedSlider = {"T1_Slider","T2_Slider","T3_Slider","T4_Slider","T5_Slider", //used to access Shared Preferences
             "T6_Slider","T7_Slider","T8_Slider","T9_Slider"}; //for slider Value
+
+    String [] tokenLetter = {" "," "," "," "," "," "," "," "," "};
 
     int currentToken; //holds which token currently has focus in AttributesPane
                         //from 0-8, and is 10 when no token is in focus
@@ -76,62 +82,62 @@ public class PlayerInfo extends Activity {
                 if (sliderValue <= 4) {
                     slider.setBackgroundColor(getResources().getColor(R.color.violet));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 8 && sliderValue > 4) {
                     slider.setBackgroundColor(getResources().getColor(R.color.red));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 12 && sliderValue > 8) {
                     slider.setBackgroundColor(getResources().getColor(R.color.orange));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 16 && sliderValue > 12) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightOrange));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 20 && sliderValue > 16) {
                     slider.setBackgroundColor(getResources().getColor(R.color.darkYellow));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 24 && sliderValue > 20) {
                     slider.setBackgroundColor(getResources().getColor(R.color.yellow));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 28 && sliderValue > 24) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightGreen));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 32 && sliderValue > 28) {
                     slider.setBackgroundColor(getResources().getColor(R.color.green));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 36 && sliderValue > 32) {
                     slider.setBackgroundColor(getResources().getColor(R.color.lightBlue));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 40 && sliderValue > 36) {
                     slider.setBackgroundColor(getResources().getColor(R.color.blue));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 44 && sliderValue > 40) {
                     slider.setBackgroundColor(getResources().getColor(R.color.darkBlue));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (sliderValue <= 50 && sliderValue > 44) {
                     slider.setBackgroundColor(getResources().getColor(R.color.purple));
                     editor.putInt(sharedSlider[currentToken], sliderValue);
-                    editor.commit();
+                    editor.apply();
                 }
                 if (event.getAction()==MotionEvent.ACTION_UP) {
                     attributesPaneHasBeenChanged = true;
@@ -267,17 +273,21 @@ public class PlayerInfo extends Activity {
         }
         EditText edit = (EditText) findViewById(R.id.myText);
         String currentTokenText = edit.getText().toString();
+        if(currentTokenText.length()!=0)
+        tokenLetter[currentToken] = Character.toString(currentTokenText.charAt(0));
         editor.putString(sharedName[currentToken], currentTokenText);
         editor.commit();
     }
 
     public void clearTokenValues(int startPoint){
         if(startPoint==0||startPoint==1){
+            tokenLetter[startPoint]="";
             editor.putString(sharedName[startPoint], "");
             editor.putInt(sharedSlider[startPoint], 0);
             editor.commit();
         }else {
             for (int i = startPoint; i != 9; i++) {
+                tokenLetter[i]="";
                 editor.putString(sharedName[i], "");
                 editor.putInt(sharedSlider[i], 0);
                 editor.commit();
@@ -335,6 +345,7 @@ public class PlayerInfo extends Activity {
             imageIDs[i] = R.drawable.blank;
     }
 
+
     public class GridViewAdapter extends BaseAdapter {
         private Context context;
 
@@ -357,20 +368,30 @@ public class PlayerInfo extends Activity {
 
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            ImageView imageView;
+            final RelativeLayout relativeLayout;
             if (convertView == null) {
-                imageView = new ImageView(context);
-                imageView.setLayoutParams(new GridView.LayoutParams(185, 185));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(5, 5, 5, 5);
+                relativeLayout = new RelativeLayout(context);
             } else {
-                imageView = (ImageView) convertView;
+                relativeLayout = (RelativeLayout) convertView;
             }
-            imageView.setImageResource(imageIDs[position]);
-            if(imageIDs[position]==R.drawable.plus){//adds listener to plus token
-                imageView.setOnClickListener(new View.OnClickListener() {//CLICKING ON PLUS
+            relativeLayout.setLayoutParams(new GridView.LayoutParams(185, 185));
+            ImageView iView = new ImageView(context);
+            iView.setLayoutParams(new GridView.LayoutParams(185, 185));
+            iView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            iView.setPadding(5, 5, 5, 5);
+            iView.setImageResource(imageIDs[position]);
+            TextView tView = new TextView(context);
+            tView.setText(tokenLetter[position]);
+            tView.setTextSize(100);
+            tView.setTextColor(Color.BLACK);
+            tView.setLayoutParams(new GridView.LayoutParams(185, 185));
+            tView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+            relativeLayout.addView(iView);
+            relativeLayout.addView(tView);
+            if(imageIDs[position]==R.drawable.plus){
+                relativeLayout.setOnClickListener(new View.OnClickListener() {//CLICKING ON PLUS
                     @Override
-                    public void onClick(View v) {//increment locators on plus touch
+                    public void onClick(View v) {
                         currentToken = plusLocation;
                         plusLocation++;
                         /*Toast.makeText(PlayerInfo.this,
@@ -379,14 +400,14 @@ public class PlayerInfo extends Activity {
                         paneIsVisible = true;
                         attributesPaneHasBeenChanged=true;
                         tokensPaneHasBeenChanged=true;
-                        }
+                    }
                 });
-            } else if(imageIDs[position]!=R.drawable.blank&&imageIDs[position]!=R.drawable.plus){//if not plus, then store location of token in a tag, and listen
-                imageView.setTag(Integer.valueOf(position));
-                imageView.setOnClickListener(new View.OnClickListener() {//CLICKING ON TOKEN
+            } else if(imageIDs[position]!=R.drawable.blank&&imageIDs[position]!=R.drawable.plus){
+                relativeLayout.setTag(Integer.valueOf(position));
+                relativeLayout.setOnClickListener(new View.OnClickListener() {//CLICKING ON PLUS
                     @Override
                     public void onClick(View v) {
-                        Integer position = (Integer)v.getTag();
+                        Integer position = (Integer) v.getTag();
                         currentToken = position;
                         paneIsVisible = true;
                         attributesPaneHasBeenChanged = true;
@@ -394,7 +415,7 @@ public class PlayerInfo extends Activity {
                     }
                 });
             }
-            return imageView;
+            return relativeLayout;
         }
     }
 

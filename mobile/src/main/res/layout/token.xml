@@ -1,20 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0">
+    android:background="#f0f0f0"
+    android:id="@+id/TokenView">
 
-    <GridView
-        android:id="@+id/gridView"
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/red"
+    android:id="@+id/TokenShape"
+    />
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:columnWidth="100dp"
-        android:drawSelectorOnTop="true"
+        android:text="E"
+        android:textSize="200dp"
         android:gravity="center"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp"
-        android:focusable="true"
-        android:clickable="true"/>
+        android:paddingTop="30dp"
+        android:id="@+id/TokenText"
+        />
 
 </RelativeLayout>
