@@ -2,6 +2,7 @@ package com.turntracker.lane.turntracker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ public class PlayerInfo extends Activity {
     Editor editor = null;
     Slider slider = null;
     ImageView trashCan = null;
+    ImageView nextArrow = null;
 
     Integer[] imageIDs = new Integer[9]; //stores references to drawables
 
@@ -57,6 +59,15 @@ public class PlayerInfo extends Activity {
         clearTokenValues(0);
         clearTokenValues(1);
         clearTokenValues(2);
+        nextArrow = (ImageView) findViewById(R.id.next);
+        nextArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(PlayerInfo.this, TurnTracking.class);
+                myIntent.putExtra("key", plusLocation); //Optional parameters
+                PlayerInfo.this.startActivity(myIntent);
+            }
+        });
         trashCan = (ImageView) findViewById(R.id.trash);
         trashCan.setOnClickListener(new View.OnClickListener() {
             @Override
