@@ -1,77 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#ffe9faff">
-
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridView1"
-    android:numColumns="3"
-    android:gravity="center"
-    android:columnWidth="100dp"
-    android:stretchMode="columnWidth"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="500px"
-    >
-
-</GridView>
-
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="2">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:id="@+id/trash"
-            android:src="@drawable/can"
-            android:layout_gravity="bottom"
-            />
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="150dp"
-        android:id="@+id/next"
-        android:src="@drawable/next"
-        android:layout_gravity="bottom"
-        />
-        </LinearLayout>
-    <LinearLayout
         android:orientation="vertical"
+        android:weightSum="20"
+        android:background="#ffe9faff">
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="500px"
-        android:background="#fffff5e5"
-        android:id="@+id/LinearLayout"
-        >
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/blank"
-            />
+        android:layout_height="fill_parent"
+        android:layout_weight="6.7">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical">
         <com.gc.materialdesign.views.Slider
             android:id="@+id/slider"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="#1E88E5"
             materialdesign:max="50"
             materialdesign:min="0"
-            android:layout_weight="1"
             android:visibility="visible"
             />
         <EditText
             android:id="@+id/myText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:textSize="100sp"
             android:layout_alignParentBottom="true"
             android:visibility="visible"
             >
         </EditText>
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="5"
+        android:background="#fffff5e5"
+        android:id="@+id/LinearLayout"
+        >
 
-</FrameLayout>
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridView1"
+            android:numColumns="3"
+            android:gravity="center"
+            android:columnWidth="100dp"
+            android:stretchMode="columnWidth"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="25px"
+            >
+
+        </GridView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8.5"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2"
+                android:orientation="horizontal">
+            <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:id="@+id/trash"
+                android:layout_weight="1"
+                android:src="@drawable/can"
+                />
+            <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:id="@+id/next"
+                android:src="@drawable/next"
+                android:layout_weight="1"
+                />
+            </LinearLayout>
+        </RelativeLayout>
+</LinearLayout>

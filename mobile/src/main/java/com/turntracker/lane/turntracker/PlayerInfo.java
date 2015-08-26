@@ -72,8 +72,9 @@ public class PlayerInfo extends Activity {
         trashCan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentToken==plusLocation-1&&plusLocation>2)
-                    paneIsVisible=false;
+                if(currentToken==plusLocation-1&&plusLocation>2) {
+                    paneIsVisible = false;
+                }
                 if(plusLocation!=0&&plusLocation!=1&&plusLocation!=2) {
                     clearTokenValues(plusLocation-1);
                     plusLocation--;
@@ -198,46 +199,35 @@ public class PlayerInfo extends Activity {
                 if (sliderValue <= 4)
                     slider.setBackgroundColor(getResources().getColor(R.color.violet));
 
-
                 if (sliderValue <= 8 && sliderValue > 4)
                     slider.setBackgroundColor(getResources().getColor(R.color.red));
-
 
                 if (sliderValue <= 12 && sliderValue > 8)
                     slider.setBackgroundColor(getResources().getColor(R.color.orange));
 
-
                 if (sliderValue <= 16 && sliderValue > 12)
                     slider.setBackgroundColor(getResources().getColor(R.color.lightOrange));
-
 
                 if (sliderValue <= 20 && sliderValue > 16)
                     slider.setBackgroundColor(getResources().getColor(R.color.darkYellow));
 
-
                 if (sliderValue <= 24 && sliderValue > 20)
                     slider.setBackgroundColor(getResources().getColor(R.color.yellow));
-
 
                 if (sliderValue <= 28 && sliderValue > 24)
                     slider.setBackgroundColor(getResources().getColor(R.color.lightGreen));
 
-
                 if (sliderValue <= 32 && sliderValue > 28)
                     slider.setBackgroundColor(getResources().getColor(R.color.green));
-
 
                 if (sliderValue <= 36 && sliderValue > 32)
                     slider.setBackgroundColor(getResources().getColor(R.color.lightBlue));
 
-
                 if (sliderValue <= 40 && sliderValue > 36)
                     slider.setBackgroundColor(getResources().getColor(R.color.blue));
 
-
                 if (sliderValue <= 44 && sliderValue > 40)
                     slider.setBackgroundColor(getResources().getColor(R.color.darkBlue));
-
 
                 if (sliderValue <= 50 && sliderValue > 44)
                     slider.setBackgroundColor(getResources().getColor(R.color.purple));
